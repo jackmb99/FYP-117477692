@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">FinalYearProject117477692</string>
+    <string name="convert">Convert</string>
+    <string name="enter_distance">Enter Distance</string>
+    <string name="convert_to">Convert To:</string>
+    <string-array name="Distance_Type">
+        <item>Please Select</item>
+        <item>Kilometres</item>
+        <item>Miles</item>
+    </string-array>
+
+
+</resources>
