@@ -1,5 +1,8 @@
 package com.example.finalyearproject117477692;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +26,23 @@ public class AddToGroup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_group);
-
+//Learned from Michael Gleeson Android lecture
+        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = null;
+        if (cm != null){
+            activeNetwork = cm.getActiveNetworkInfo();
+        }
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if (isConnected){
+            try{
+                Toast.makeText(AddToGroup.this, "Network is connected", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(AddToGroup.this, "Network is not connected", Toast.LENGTH_SHORT).show();
+        }
 
 
         editTextFirstName = findViewById(R.id.editTextFirstName);

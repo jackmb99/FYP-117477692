@@ -3,16 +3,20 @@
     package="com.example.finalyearproject117477692">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
+        android:name=".Module"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FinalYearProject117477692"
-        android:name=".Module">
-
-        <activity android:name=".ShowMembers"></activity>
+        android:theme="@style/Theme.FinalYearProject117477692">
+        <activity android:name=".EditingGoal"></activity>
+        <activity android:name=".EditGoalActivity" />
+        <activity android:name=".EditPersonActivity" />
+        <activity android:name=".ShowGoals" />
+        <activity android:name=".ShowMembers" />
         <activity android:name=".AddToGroup" />
         <activity android:name=".SecondActivity" />
         <activity android:name=".MainActivity">

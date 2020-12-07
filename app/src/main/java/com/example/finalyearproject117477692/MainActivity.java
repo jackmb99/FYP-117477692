@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
         //declaring images and making them clickable in order to go to next activity
         ImageView myImage = (ImageView)findViewById(R.id.myImage);
         ImageView myImage2 = (ImageView)findViewById(R.id.myImage2);
+        ImageView myImage3 = (ImageView)findViewById(R.id.myImage3);
+
+
         myImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ShowMembers.class);
+                startActivity(intent);
+            }
+        });
+        myImage3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShowGoals.class);
                 startActivity(intent);
             }
         });
