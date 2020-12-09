@@ -2,14 +2,17 @@ package com.example.finalyearproject117477692;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +41,27 @@ public class ShowGoals extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_goals);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.about);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), ShowMembers.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.about:
+                        return true;
+                }
+                return false;
+            }
+        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("IndividualGoals");
        // reff = FirebaseDatabase.getInstance().getReference("CompletedGoals");

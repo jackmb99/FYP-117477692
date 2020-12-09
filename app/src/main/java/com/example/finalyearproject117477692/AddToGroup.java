@@ -1,16 +1,20 @@
 package com.example.finalyearproject117477692;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,6 +30,30 @@ public class AddToGroup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_group);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), ShowMembers.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.about:
+                        startActivity(new Intent(getApplicationContext(), ShowGoals.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
 //Learned from Michael Gleeson Android lecture
         ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = null;

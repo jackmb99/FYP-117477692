@@ -2,11 +2,14 @@ package com.example.finalyearproject117477692;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,6 +30,30 @@ public class EditingGoal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editing_goal);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.about);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), ShowMembers.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.about:
+                        startActivity(new Intent(getApplicationContext(), ShowGoals.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("IndividualGoals");
 
