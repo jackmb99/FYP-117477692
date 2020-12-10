@@ -11,9 +11,11 @@
 
     <EditText
         android:id="@+id/etEnterAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="213dp"
         android:layout_marginTop="76dp"
+        android:layout_height="51dp"
+        android:background="@drawable/custom_input"
+        android:paddingStart="12dp"
         android:ems="10"
         android:hint="@string/enter_distance"
         android:inputType="numberSigned|numberDecimal"

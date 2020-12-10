@@ -79,6 +79,10 @@ public class AddToGroup extends AppCompatActivity {
         button = findViewById(R.id.button);
         member = new Member();
         reff = FirebaseDatabase.getInstance().getReference().child("GroupMembers");
+        // https://stackoverflow.com/questions/12947620/email-address-validation-in-android-on-edittext
+        // Above is source for the below email validation pattern
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
 
        // initUI();
         // setButtonOnClickListener();
@@ -87,35 +91,41 @@ public class AddToGroup extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editTextFirstName.getText().toString().isEmpty()){
-                    editTextFirstName.setError("Error");
-                }else if(editTextLastName.getText().toString().isEmpty()){
-                    editTextLastName.setError("Error");
-                }else if(editTextAge.getText().toString().isEmpty()){
-                    editTextAge.setError("Error");
-                }else{
-                    int agea = Integer.parseInt(editTextLastName.getText().toString().trim());
-                    member.setName(editTextFirstName.getText().toString().trim());
-                    member.setAge(agea);
-                    member.setContact(editTextAge.getText().toString().trim());
+                String email = editTextAge.getText().toString().trim();
+                if (email.matches(emailPattern)){
+                    if(editTextFirstName.getText().toString().isEmpty()){
+                        editTextFirstName.setError("Error");
+                    }else if(editTextLastName.getText().toString().isEmpty()){
+                        editTextLastName.setError("Error");
+                    }else if(editTextAge.getText().toString().isEmpty()){
+                        editTextAge.setError("Error");
+                    }else{
+                        int agea = Integer.parseInt(editTextLastName.getText().toString().trim());
+                        member.setName(editTextFirstName.getText().toString().trim());
+                        member.setAge(agea);
+                        member.setContact(editTextAge.getText().toString().trim());
 
-                    // reff.push().setValue(member);
+                        // reff.push().setValue(member);
 
                    /* String key = reff.push().getKey();
                     member.setKey(key);
                     reff.child(key).setValue(member);*/
 
-                    if(edit){
-                        reff.child(member.getKey()).setValue(member);
-                    }else{
-                        String key = reff.push().getKey();
-                        member.setKey(key);
-                        reff.child(key).setValue(member);
-                        Toast.makeText(AddToGroup.this, "Data inserted successfully", Toast.LENGTH_SHORT).show();
-                    }
-                    finish();
+                        if(edit){
+                            reff.child(member.getKey()).setValue(member);
+                        }else{
+                            String key = reff.push().getKey();
+                            member.setKey(key);
+                            reff.child(key).setValue(member);
+                            Toast.makeText(AddToGroup.this, "Data inserted successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        finish();
 
+                    }
+                }else{
+                    editTextAge.setError("Invalid email");
                 }
+
             }
         });
     }

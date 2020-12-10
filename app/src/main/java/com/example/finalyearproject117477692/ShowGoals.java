@@ -26,6 +26,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+// code adapted from michael gleeson android lectures
 public class ShowGoals extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private DatabaseReference reff;
@@ -64,13 +65,14 @@ public class ShowGoals extends AppCompatActivity {
         });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("IndividualGoals");
-       // reff = FirebaseDatabase.getInstance().getReference("CompletedGoals");
+        // reff = FirebaseDatabase.getInstance().getReference("CompletedGoals");
 
         initUI();
         setListViewAdapter();
 
         addSingleEventListener();
         addChildEventListener();
+
 
         setFabClickListener();
         setListViewItemListener();
@@ -131,6 +133,7 @@ public class ShowGoals extends AppCompatActivity {
         });
     }
 
+
     private void addSingleEventListener(){
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -163,9 +166,11 @@ public class ShowGoals extends AppCompatActivity {
                     .setMessage("Do you want to delete the selected record?")
                     .setPositiveButton("Delete", (dialogInterface, i1) -> {
                         databaseReference.child(goal.getKey()).removeValue();
-                        /*String key = reff.push().getKey();
+                       /* databaseReference = FirebaseDatabase.getInstance().getReference("CompletedGoals");
+                        String key = databaseReference.push().getKey();
                         goal.setKey(key);
-                        reff.child(key).setValue(goal);*/
+                        databaseReference.child(key).setValue(goal);*/
+
                         Toast.makeText(ShowGoals.this, "Goal removed successfully", Toast.LENGTH_SHORT).show();
 
                     })
@@ -177,6 +182,7 @@ public class ShowGoals extends AppCompatActivity {
             return true;
         });
     }
+
 
     private void setFabClickListener() {
         fab.setOnClickListener(e -> {

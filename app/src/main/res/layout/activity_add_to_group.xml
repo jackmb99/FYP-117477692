@@ -11,26 +11,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvNewGoal"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="118dp"
+        android:layout_marginTop="60dp"
+        android:text="Add Member"
+        android:textStyle="bold"
+        android:textSize="30sp" />
     <EditText
         android:id="@+id/editTextFirstName"
-        style="@style/editText"
+
+        android:layout_width="285dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/custom_input"
+        android:paddingStart="12dp"
         android:hint="Name" />
 
     <EditText
         android:id="@+id/editTextLastName"
-        style="@style/editText"
+
+        android:layout_width="285dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="60dp"
+        android:background="@drawable/custom_input"
+        android:layout_marginTop="24dp"
+        android:paddingStart="12dp"
         android:hint="Age"
         android:inputType="numberSigned|numberDecimal" />
 
     <EditText
         android:id="@+id/editTextAge"
-        style="@style/editText"
+
+        android:layout_width="285dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="60dp"
+        android:background="@drawable/custom_input"
+        android:layout_marginTop="36dp"
+        android:paddingStart="12dp"
         android:hint="Contact" />
 
     <Button
         android:id="@+id/button"
-        style="@style/defaultStyle"
-        android:text="Save"/>
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="60dp"
+        android:text="Save" />
 </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
