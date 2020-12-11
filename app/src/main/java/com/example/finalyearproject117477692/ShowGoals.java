@@ -29,7 +29,7 @@ import java.util.List;
 // code adapted from michael gleeson android lectures
 public class ShowGoals extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private DatabaseReference reff;
+   // private DatabaseReference reff;
 
     private FloatingActionButton fab;
     private ListView listView;
@@ -145,7 +145,7 @@ public class ShowGoals extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
-
+    // wrapping selected item in a bundle and passing it to activity in order to update
     private void setListViewItemListener(){
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             Bundle bundle = new Bundle();
@@ -159,17 +159,14 @@ public class ShowGoals extends AppCompatActivity {
 
     private void setListViewLongClickListener(){
         listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            // getting the specific goal that was clicked from list
             Goal goal = listGoal.get(i);
-
             new AlertDialog.Builder(this)
                     .setTitle("Delete " + goal.getTitle() + ", " + goal.getDescription())
                     .setMessage("Do you want to delete the selected record?")
                     .setPositiveButton("Delete", (dialogInterface, i1) -> {
+                        // Removing data from database
                         databaseReference.child(goal.getKey()).removeValue();
-                       /* databaseReference = FirebaseDatabase.getInstance().getReference("CompletedGoals");
-                        String key = databaseReference.push().getKey();
-                        goal.setKey(key);
-                        databaseReference.child(key).setValue(goal);*/
 
                         Toast.makeText(ShowGoals.this, "Goal removed successfully", Toast.LENGTH_SHORT).show();
 
@@ -190,3 +187,7 @@ public class ShowGoals extends AppCompatActivity {
         });
     }
 }
+/* databaseReference = FirebaseDatabase.getInstance().getReference("CompletedGoals");
+                        String key = databaseReference.push().getKey();
+                        goal.setKey(key);
+                        databaseReference.child(key).setValue(goal);*/

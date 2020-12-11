@@ -41,7 +41,7 @@ public class ListViewAdapter extends BaseAdapter {
         ViewHolder holder;
         if(convertView == null){
             convertView = activity.getLayoutInflater().inflate(R.layout.row_listview, null);
-
+            // ViewHolder class which caches views associated with the default Preference layouts.
             holder = new ViewHolder();
             holder.textViewFirstName = convertView.findViewById(R.id.textViewFirstName);
             holder.textViewLastName = convertView.findViewById(R.id.textViewLastName);
