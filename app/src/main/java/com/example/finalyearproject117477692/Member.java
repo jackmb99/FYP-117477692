@@ -1,6 +1,7 @@
 package com.example.finalyearproject117477692;
 import org.parceler.Parcel;
 
+// class used for members
 @Parcel
 public class Member {
     private String Name;
@@ -51,6 +52,8 @@ public class Member {
         return this.Name + ", " + Age + " years of age - " + Contact;
     }
 
+
+    // code from Michael Gleesons lecture
     @Override
     public boolean equals(Object object){
         if(object == null)

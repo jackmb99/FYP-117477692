@@ -10,6 +10,8 @@
     android:background="@drawable/gradient"
     tools:context=".MainActivity">
 
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -190,7 +192,8 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:src="@drawable/dashboardicon"
+                        android:id="@+id/myImage4"
+                        android:src="@drawable/covid"
                         android:layout_width="80dp"
                         android:layout_height="80dp">
 
@@ -199,7 +202,7 @@
                         android:layout_marginTop="12dp"
                         android:textColor="#6f6f6f"
                         android:textSize="18sp"
-                        android:text="Default"
+                        android:text="Covid Update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -225,7 +228,8 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:src="@drawable/dashboardicon"
+                        android:id="@+id/myImage5"
+                        android:src="@drawable/linechart"
                         android:layout_width="80dp"
                         android:layout_height="80dp">
 
@@ -234,7 +238,7 @@
                         android:layout_marginTop="12dp"
                         android:textColor="#6f6f6f"
                         android:textSize="18sp"
-                        android:text="Default"
+                        android:text="5K Chart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -261,7 +265,8 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:src="@drawable/dashboardicon"
+                        android:id="@+id/myImage6"
+                        android:src="@drawable/leaderboard"
                         android:layout_width="80dp"
                         android:layout_height="80dp">
 
@@ -270,7 +275,7 @@
                         android:layout_marginTop="12dp"
                         android:textColor="#6f6f6f"
                         android:textSize="18sp"
-                        android:text="Default"
+                        android:text="Leaderboard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 

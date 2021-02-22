@@ -2,6 +2,8 @@ package com.example.finalyearproject117477692;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +34,7 @@ public class ShowGoals extends AppCompatActivity {
     private DatabaseReference databaseReference;
    // private DatabaseReference reff;
 
+    // declaring variables
     private FloatingActionButton fab;
     private ListView listView;
     private GoalListViewAdapter listViewAdapter;
@@ -44,6 +48,8 @@ public class ShowGoals extends AppCompatActivity {
         setContentView(R.layout.activity_show_goals);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
+
+        /*Bottom nav code from https://www.youtube.com/watch?v=JjfSjMs0ImQ*/
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -78,6 +84,7 @@ public class ShowGoals extends AppCompatActivity {
         setListViewItemListener();
         setListViewLongClickListener();
     }
+    // initialising interface
     private void initUI(){
         progressBar = findViewById(R.id.progressBar);
         fab = findViewById(R.id.fab);
@@ -88,7 +95,7 @@ public class ShowGoals extends AppCompatActivity {
         listViewAdapter = new GoalListViewAdapter(this, listGoal);
         listView.setAdapter(listViewAdapter);
     }
-
+// show goals
     private void addChildEventListener() {
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -100,7 +107,7 @@ public class ShowGoals extends AppCompatActivity {
                     listViewAdapter.notifyDataSetChanged();
                 }
             }
-
+// what happens if goals are updated
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Goal goal = dataSnapshot.getValue(Goal.class);
@@ -157,6 +164,7 @@ public class ShowGoals extends AppCompatActivity {
         });
     }
 
+    //delete goal
     private void setListViewLongClickListener(){
         listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
             // getting the specific goal that was clicked from list
@@ -178,6 +186,28 @@ public class ShowGoals extends AppCompatActivity {
                     .show();
             return true;
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    // log out
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menuLogout:
+
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Toast.makeText(ShowGoals.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LogInActivity.class));
+                break;
+        }
+        return true;
     }
 
 

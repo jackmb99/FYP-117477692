@@ -3,10 +3,9 @@ package com.example.finalyearproject117477692;
 import android.app.Application;
 import android.widget.ArrayAdapter;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
+
+// CLASS NOT USED
 
 public class Module extends Application {
     public ArrayList <String> garrList = new ArrayList<>();

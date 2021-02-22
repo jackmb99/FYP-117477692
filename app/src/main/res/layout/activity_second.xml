@@ -8,6 +8,12 @@
     tools:context=".SecondActivity"
     tools:visibility="visible">
 
+   <!-- <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent" />-->
 
     <EditText
         android:id="@+id/etEnterAmount"

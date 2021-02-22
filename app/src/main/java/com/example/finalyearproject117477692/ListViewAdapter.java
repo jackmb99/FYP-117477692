@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Michael Gleeson on 27/02/2019
- * Copyright (c) 2019 | gleeson.io
- */
+// Code from Michael Gleesons CRUD on firebase
+
 public class ListViewAdapter extends BaseAdapter {
     private Activity activity;
     private List<Member> listPerson;
@@ -59,6 +57,7 @@ public class ListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
+// defining the items in the holder
     class ViewHolder{
         TextView textViewFirstName;
         TextView textViewLastName;

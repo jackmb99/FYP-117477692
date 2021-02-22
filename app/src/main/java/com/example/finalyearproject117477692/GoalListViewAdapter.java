@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+// Code from Michael Gleesons CRUD on firebase
+
 public class GoalListViewAdapter extends BaseAdapter {
     private Activity activity;
     private List<Goal> listGoal;
@@ -32,6 +34,7 @@ public class GoalListViewAdapter extends BaseAdapter {
         return 0;
     }
 
+    // displaying the data in list
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GoalListViewAdapter.ViewHolder holder;
@@ -55,6 +58,7 @@ public class GoalListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
+    // defining the items in the holder
     class ViewHolder{
         TextView tvTitle;
         TextView tvDescription;

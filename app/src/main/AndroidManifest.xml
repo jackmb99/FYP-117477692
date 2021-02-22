@@ -12,20 +12,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalYearProject117477692">
-        <activity android:name=".EditingGoal"></activity>
-        <activity android:name=".EditGoalActivity" />
-        <activity android:name=".EditPersonActivity" />
-        <activity android:name=".ShowGoals" />
-        <activity android:name=".ShowMembers" />
-        <activity android:name=".AddToGroup" />
-        <activity android:name=".SecondActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LeaderboardActivity"></activity>
+        <activity android:name=".Testing" />
+        <activity android:name=".TestActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Chart" />
+        <activity android:name=".Covid" />
+        <activity android:name=".EditingGoal" />
+        <activity android:name=".EditGoalActivity" />
+        <activity android:name=".EditPersonActivity" />
+        <activity android:name=".ShowGoals" />
+        <activity android:name=".ShowMembers" />
+        <activity android:name=".AddToGroup" />
+        <activity android:name=".SecondActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

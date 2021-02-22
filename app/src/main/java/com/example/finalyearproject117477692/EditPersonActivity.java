@@ -2,25 +2,28 @@ package com.example.finalyearproject117477692;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.parceler.Parcels;
 
-/**
- * Created by Michael Gleeson on 03/12/2020
- * Copyright (c) 2020
- */
+// Code from Michael Gleesons CRUD on firebase
 
 public class EditPersonActivity extends AppCompatActivity {
+
+    // declare variables
     private EditText editTextFirstName;
     private EditText editTextLastName;
     private EditText editTextAge;
@@ -39,6 +42,7 @@ public class EditPersonActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
+        /*Bottom nav code from https://www.youtube.com/watch?v=JjfSjMs0ImQ*/
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -68,7 +72,7 @@ public class EditPersonActivity extends AppCompatActivity {
         initUIFromPerson();
         setCancelButtonOnClickListener();
     }
-
+    // initialise interface
     private void initUI(){
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
@@ -76,13 +80,13 @@ public class EditPersonActivity extends AppCompatActivity {
         button = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
     }
-
+    // data being edited being set to text fields
     private void initUIFromPerson(){
         editTextFirstName.setText(member.getName());
         editTextLastName.setText(member.getContact());
         editTextAge.setText(member.getAge() + "");
     }
-
+    // saving edited data
     private void setButtonOnClickListener(){
         button.setOnClickListener(e -> {
             String firstName = editTextFirstName.getText().toString();
@@ -108,6 +112,28 @@ public class EditPersonActivity extends AppCompatActivity {
             Intent intent = new Intent(EditPersonActivity.this, ShowMembers.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+// log out
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menuLogout:
+
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Toast.makeText(EditPersonActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LogInActivity.class));
+                break;
+        }
+        return true;
     }
 
     private void handleBundle(){

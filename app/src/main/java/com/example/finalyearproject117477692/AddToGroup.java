@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+// Code from Michael Gleesons CRUD on firebase
+// insert from https://www.youtube.com/watch?v=iy6WexahCdY
+
 public class AddToGroup extends AppCompatActivity {
+    // declare variables
     EditText editTextFirstName, editTextLastName, editTextAge;
     Button button;
     DatabaseReference reff;
@@ -34,6 +42,7 @@ public class AddToGroup extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
+        /*Bottom nav code from https://www.youtube.com/watch?v=JjfSjMs0ImQ*/
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -54,7 +63,9 @@ public class AddToGroup extends AppCompatActivity {
                 return false;
             }
         });
-//Learned from Michael Gleeson Android lecture
+
+        //Learned from Michael Gleeson Android lecture
+        // checks network connectivity
         ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = null;
         if (cm != null){
@@ -79,18 +90,16 @@ public class AddToGroup extends AppCompatActivity {
         button = findViewById(R.id.button);
         member = new Member();
         reff = FirebaseDatabase.getInstance().getReference().child("GroupMembers");
+
         // https://stackoverflow.com/questions/12947620/email-address-validation-in-android-on-edittext
         // Above is source for the below email validation pattern
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
-       // initUI();
-        // setButtonOnClickListener();
-        /*handleBundle();
-        initUIFromPerson();*/
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // validation
                 String email = editTextAge.getText().toString().trim();
                 if (email.matches(emailPattern)){
                     if(editTextFirstName.getText().toString().isEmpty()){
@@ -105,15 +114,10 @@ public class AddToGroup extends AppCompatActivity {
                         member.setAge(agea);
                         member.setContact(editTextAge.getText().toString().trim());
 
-                        // reff.push().setValue(member);
-
-                   /* String key = reff.push().getKey();
-                    member.setKey(key);
-                    reff.child(key).setValue(member);*/
-
                         if(edit){
                             reff.child(member.getKey()).setValue(member);
                         }else{
+                            // writing to database
                             String key = reff.push().getKey();
                             member.setKey(key);
                             reff.child(key).setValue(member);
@@ -128,50 +132,31 @@ public class AddToGroup extends AppCompatActivity {
 
             }
         });
+
+
+
     }
 
-//    private void initUI(){
-//        editTextFirstName = findViewById(R.id.etName);
-//        editTextLastName = findViewById(R.id.etAge);
-//        editTextAge = findViewById(R.id.etContact);
-//        button = findViewById(R.id.btnSave);
-//    }
 
-    /*private void initUIFromPerson(){
-        editTextFirstName.setText(member.getName());
-        editTextLastName.setText(member.getContact());
-        editTextAge.setText(member.getAge() + "");
-    }*/
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu){
 
-    /*private void setButtonOnClickListener(){
-        button.setOnClickListener(e -> {
-            String firstName = editTextFirstName.getText().toString();
-            String lastName = editTextLastName.getText().toString();
-            int age = Integer.parseInt(editTextAge.getText().toString());
+      MenuInflater inflater = getMenuInflater();
+      inflater.inflate(R.menu.menu, menu);
+      return true;
+  }
+        // log out functionality
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menuLogout:
 
-            member.setName(firstName);
-            member.setContact(lastName);
-            member.setAge(age);
-
-            if(edit){
-                databaseReference.child(member.getKey()).setValue(member);
-            }else{
-                String key = databaseReference.push().getKey();
-                member.setKey(key);
-                databaseReference.child(key).setValue(member);
-            }
-            finish();
-        });
-    }*/
-
-
-  /*  private void handleBundle(){
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            edit = bundle.getBoolean("edit");
-            if(edit){
-                member = Parcels.unwrap(bundle.getParcelable("member"));
-            }
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Toast.makeText(AddToGroup.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LogInActivity.class));
+                break;
         }
-    }*/
+        return true;
+    }
 }

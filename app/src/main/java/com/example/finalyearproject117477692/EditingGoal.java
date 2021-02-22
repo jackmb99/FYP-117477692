@@ -2,20 +2,28 @@ package com.example.finalyearproject117477692;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.parceler.Parcels;
 
+// Code from Michael Gleesons CRUD on firebase
+
 public class EditingGoal extends AppCompatActivity {
+
+    // declare variables
     private EditText editTextFirstName;
     private EditText editTextAge;
     private Button button, btnCancel;
@@ -34,6 +42,7 @@ public class EditingGoal extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
 
+        /*Bottom nav code from https://www.youtube.com/watch?v=JjfSjMs0ImQ*/
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -63,6 +72,7 @@ public class EditingGoal extends AppCompatActivity {
         initUIFromPerson();
         setCancelButtonOnClickListener();
     }
+    // initialising interface
     private void initUI(){
         editTextFirstName = findViewById(R.id.editTextFirstName);
 
@@ -77,6 +87,7 @@ public class EditingGoal extends AppCompatActivity {
         editTextAge.setText(goal.getDescription());
     }
 
+    // setting text of fields to data being edited and saving new data
     private void setButtonOnClickListener(){
         button.setOnClickListener(e -> {
             String title = editTextFirstName.getText().toString();
@@ -103,7 +114,7 @@ public class EditingGoal extends AppCompatActivity {
         });
     }
 
-
+        // edit
     private void handleBundle(){
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -113,4 +124,27 @@ public class EditingGoal extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+        // log out
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menuLogout:
+
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Toast.makeText(EditingGoal.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LogInActivity.class));
+                break;
+        }
+        return true;
+    }
+
 }

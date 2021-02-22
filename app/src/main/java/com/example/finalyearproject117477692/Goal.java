@@ -1,6 +1,7 @@
 package com.example.finalyearproject117477692;
 import org.parceler.Parcel;
 
+// class for goals
 @Parcel
 public class Goal {
     private String Title;
@@ -31,6 +32,8 @@ public class Goal {
     //constructor
     public Goal() {
     }
+
+    // Code from Michael Gleesons CRUD on firebase
     @Override
     public boolean equals(Object object){
         if(object == null)
