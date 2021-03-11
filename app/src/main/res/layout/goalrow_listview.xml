@@ -15,4 +15,8 @@
         android:id="@+id/tvDescription"
         style="@style/textViewStyle"/>
 
+    <TextView
+        android:id="@+id/tvDate"
+        style="@style/textViewStyle"/>
+
 </LinearLayout>

@@ -14,12 +14,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 // Code from Michael Gleesons CRUD on firebase
 
@@ -29,6 +33,7 @@ public class EditGoalActivity extends AppCompatActivity {
     Button button;
     DatabaseReference reff;
     Goal goal;
+    ActionBar actionBar;
 
     private boolean edit = false;
 
@@ -38,6 +43,10 @@ public class EditGoalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_goal);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
+
+        // action bar title
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("New Goal");
 
         /*Bottom nav code from https://www.youtube.com/watch?v=JjfSjMs0ImQ*/
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -96,10 +105,13 @@ public class EditGoalActivity extends AppCompatActivity {
                 }else if(etDescription.getText().toString().isEmpty()){
                     etDescription.setError("Error");
                 }else{
-
+                    String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     goal.setTitle(etTitle.getText().toString().trim());
 
                     goal.setDescription(etDescription.getText().toString().trim());
+                    goal.setDate(timeStamp);
+                    goal.setUserUid(uid);
 
                     // reff.push().setValue(member);
 
@@ -139,6 +151,10 @@ public class EditGoalActivity extends AppCompatActivity {
                 finish();
                 Toast.makeText(EditGoalActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, LogInActivity.class));
+                break;
+            case R.id.menuHome:
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
                 break;
         }
         return true;

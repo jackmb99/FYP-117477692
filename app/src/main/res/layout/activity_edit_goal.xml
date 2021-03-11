@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/gradient"
+    android:background="@drawable/wallpaper"
+    android:backgroundTint="#80FFFFFF"
+    android:backgroundTintMode="src_over"
     tools:context=".EditGoalActivity">
 
     <LinearLayout
@@ -51,6 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginStart="60dp"
+        android:background="@drawable/custom_button"
+        android:textColor="#FFFFFF"
         android:text="Save"/>
 
 

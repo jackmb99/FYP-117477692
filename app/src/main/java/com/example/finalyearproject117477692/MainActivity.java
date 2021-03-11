@@ -9,16 +9,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
+    ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Main Dashboard");
 
 
         //declaring images and making them clickable in order to go to next activity
@@ -28,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         ImageView myImage4 = (ImageView)findViewById(R.id.myImage4);
         ImageView myImage5 = (ImageView)findViewById(R.id.myImage5);
         ImageView myImage6 = (ImageView)findViewById(R.id.myImage6);
+        ImageView myImage7 = (ImageView)findViewById(R.id.myImage7);
+        ImageView myImage8 = (ImageView)findViewById(R.id.myImage8);
+        ImageView myImage9 = (ImageView)findViewById(R.id.myImage9);
 
         // convert
         myImage.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +83,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LeaderboardActivity.class);
+                startActivity(intent);
+            }
+        });
+        // group
+        myImage7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Group.class);
+                startActivity(intent);
+            }
+        });
+
+        myImage8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GroupLeaderboardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myImage9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
         });

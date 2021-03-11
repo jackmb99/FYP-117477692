@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +28,7 @@ public class EditingGoal extends AppCompatActivity {
     private EditText editTextFirstName;
     private EditText editTextAge;
     private Button button, btnCancel;
+    ActionBar actionBar;
 
     private DatabaseReference databaseReference;
 
@@ -38,6 +40,10 @@ public class EditingGoal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editing_goal);
+
+        // action bar title
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Update Goal");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
@@ -90,12 +96,16 @@ public class EditingGoal extends AppCompatActivity {
     // setting text of fields to data being edited and saving new data
     private void setButtonOnClickListener(){
         button.setOnClickListener(e -> {
+
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             String title = editTextFirstName.getText().toString();
             String description = editTextAge.getText().toString();
 
             goal.setTitle(title);
 
             goal.setDescription(description);
+
+            goal.setUserUid(uid);
 
             if(edit){
                 databaseReference.child(goal.getKey()).setValue(goal);
@@ -142,6 +152,10 @@ public class EditingGoal extends AppCompatActivity {
                 finish();
                 Toast.makeText(EditingGoal.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, LogInActivity.class));
+                break;
+            case R.id.menuHome:
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
                 break;
         }
         return true;

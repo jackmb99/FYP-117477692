@@ -44,6 +44,7 @@ public class GoalListViewAdapter extends BaseAdapter {
             holder = new GoalListViewAdapter.ViewHolder();
             holder.tvTitle = convertView.findViewById(R.id.tvTitle);
             holder.tvDescription = convertView.findViewById(R.id.tvDescription);
+            holder.tvDate = convertView.findViewById(R.id.tvDate);
 
 
             convertView.setTag(holder);
@@ -53,6 +54,7 @@ public class GoalListViewAdapter extends BaseAdapter {
 
         holder.tvTitle.setText(listGoal.get(position).getTitle());
         holder.tvDescription.setText(listGoal.get(position).getDescription());
+        holder.tvDate.setText(listGoal.get(position).getDate());
 
 
         return convertView;
@@ -62,6 +64,6 @@ public class GoalListViewAdapter extends BaseAdapter {
     class ViewHolder{
         TextView tvTitle;
         TextView tvDescription;
-
+        TextView tvDate;
     }
 }

@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,10 +26,16 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     EditText etEmail, etPassword;
     ProgressBar progressBar;
 
+    ActionBar actionBar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Log In");
 
         // initialising variables
         mAuth = FirebaseAuth.getInstance();
@@ -59,42 +66,47 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             etEmail.setError("Email is required");
             etEmail.requestFocus();
             return;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Please enter a valid email");
             etEmail.requestFocus();
             return;
         }
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
             return;
         }
-        if(password.length()<6){
+        if (password.length() < 6) {
             etPassword.setError("Minimum length of password is 6 characters");
             etPassword.requestFocus();
             return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
-
+        if (email.equals("admin@admin.com") && password.equals("admin1")) {
+            Intent intent = new Intent(LogInActivity.this, Admin.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
         //log in
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Intent intent = new Intent(LogInActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
     }
 }

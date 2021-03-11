@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.parceler.Parcels;
@@ -36,9 +38,11 @@ public class ShowGoals extends AppCompatActivity {
 
     // declaring variables
     private FloatingActionButton fab;
+    private Query query;
     private ListView listView;
     private GoalListViewAdapter listViewAdapter;
     private List<Goal> listGoal = new ArrayList<>();
+    ActionBar actionBar;
 
     private ProgressBar progressBar;
 
@@ -46,6 +50,11 @@ public class ShowGoals extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_goals);
+
+        // action bar title
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Show Goals");
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
 
@@ -73,6 +82,11 @@ public class ShowGoals extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("IndividualGoals");
         // reff = FirebaseDatabase.getInstance().getReference("CompletedGoals");
 
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        query = FirebaseDatabase.getInstance().getReference("IndividualGoals")
+                .orderByChild("userUid")
+                .equalTo(uid);
+
         initUI();
         setListViewAdapter();
 
@@ -97,7 +111,7 @@ public class ShowGoals extends AppCompatActivity {
     }
 // show goals
     private void addChildEventListener() {
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Goal goal = dataSnapshot.getValue(Goal.class);
@@ -142,7 +156,7 @@ public class ShowGoals extends AppCompatActivity {
 
 
     private void addSingleEventListener(){
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 progressBar.setVisibility(View.GONE);
@@ -170,13 +184,13 @@ public class ShowGoals extends AppCompatActivity {
             // getting the specific goal that was clicked from list
             Goal goal = listGoal.get(i);
             new AlertDialog.Builder(this)
-                    .setTitle("Delete " + goal.getTitle() + ", " + goal.getDescription())
-                    .setMessage("Do you want to delete the selected record?")
-                    .setPositiveButton("Delete", (dialogInterface, i1) -> {
+                    .setTitle("Complete " + goal.getTitle() + ", " + goal.getDescription())
+                    .setMessage("Do you want to complete the selected record?")
+                    .setPositiveButton("Complete", (dialogInterface, i1) -> {
                         // Removing data from database
                         databaseReference.child(goal.getKey()).removeValue();
 
-                        Toast.makeText(ShowGoals.this, "Goal removed successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowGoals.this, "Goal completed, well done", Toast.LENGTH_SHORT).show();
 
                     })
                     .setNegativeButton("Cancel", (dialogInterface, i12) -> {
@@ -205,6 +219,10 @@ public class ShowGoals extends AppCompatActivity {
                 finish();
                 Toast.makeText(ShowGoals.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, LogInActivity.class));
+                break;
+            case R.id.menuHome:
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
                 break;
         }
         return true;

@@ -7,6 +7,24 @@ public class Goal {
     private String Title;
     private String Description;
     private String key;
+    private String userUid;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getUserUid() {
+        return userUid;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
+    }
 
     public String getTitle() {
         return Title;
