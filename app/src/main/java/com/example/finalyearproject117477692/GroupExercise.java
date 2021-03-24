@@ -47,6 +47,7 @@ public class GroupExercise extends AppCompatActivity {
         Button btnExercise = findViewById(R.id.btnExercise);
         EditText etExercise = findViewById(R.id.etExercise);
         EditText etDistanceExercised = findViewById(R.id.etDistanceExercised);
+        EditText etComment = findViewById(R.id.etComment);
         Exercise exercise = new Exercise();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -57,11 +58,13 @@ public class GroupExercise extends AppCompatActivity {
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // here you can get your data from this snapshot object
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                /*String data = dataSnapshot.getValue("distance").toString();*/
-                distance = dataSnapshot.child(uid).child("distance").getValue().toString();
-                System.out.println(distance);
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    // here you can get your data from this snapshot object
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    /*String data = dataSnapshot.getValue("distance").toString();*/
+                    distance = dataSnapshot.child(uid).child("distance").getValue().toString();
+                    System.out.println(distance);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -74,15 +77,17 @@ public class GroupExercise extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // here you can get your data from this snapshot object
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                /*String data = dataSnapshot.getValue("distance").toString();*/
-                distanceGroup = dataSnapshot.child(uid).child("distance").getValue().toString();
-                System.out.println(distanceGroup);
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    /*String data = dataSnapshot.getValue("distance").toString();*/
+                    distanceGroup = dataSnapshot.child(uid).child("distance").getValue().toString();
+                    System.out.println(distanceGroup);
+                }
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled (DatabaseError databaseError){
 
-            }
+                }
 
         });
 
@@ -103,7 +108,10 @@ public class GroupExercise extends AppCompatActivity {
                     etExercise.setError("Error");
                 }else if(etDistanceExercised.getText().toString().isEmpty()) {
                     etDistanceExercised.setError("Error");
-                } else {
+                }else if(etComment.getText().toString().isEmpty()){
+                    etComment.setError("Error");
+                }
+                else {
 
                 String dbDistance = String.valueOf(etDistanceExercised.getText());
                 double semiDistance = Double.parseDouble(dbDistance);
@@ -115,7 +123,7 @@ public class GroupExercise extends AppCompatActivity {
                     HashMap map = new HashMap();
                     map.put("name", email);
                     map.put("distance", finalDistance);
-                    map.put("UserUid", uid);
+                    map.put("userUid", uid);
 
                     FirebaseDatabase.getInstance().getReference("Distance").child(uid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -153,11 +161,15 @@ public class GroupExercise extends AppCompatActivity {
                     etExercise.setError("Error");
                 }else if(etDistanceExercised.getText().toString().isEmpty()) {
                     etDistanceExercised.setError("Error");
-                } else{
+                }else if(etComment.getText().toString().isEmpty()){
+                    etComment.setError("Error");
+                }
+                else{
                     String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
                     // int mdistance = Integer.parseInt(etDistanceExercised.getText().toString().trim());
                     exercise.setExerciseType(etExercise.getText().toString().trim());
                     exercise.setDistanceCovered(etDistanceExercised.getText().toString().trim());
+                    exercise.setComment(etComment.getText().toString().trim());
                     exercise.setEmail(email);
                     exercise.setDate(timeStamp);
 

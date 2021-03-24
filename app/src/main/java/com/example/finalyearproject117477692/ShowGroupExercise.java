@@ -73,7 +73,7 @@ public class ShowGroupExercise extends AppCompatActivity {
         listView.setAdapter(listViewAdapter);
     }
 
-    // show members
+    // show exercise
     private void addChildEventListener() {
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override

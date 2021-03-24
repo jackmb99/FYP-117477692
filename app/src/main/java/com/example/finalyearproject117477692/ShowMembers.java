@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,9 +23,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +34,24 @@ public class ShowMembers extends AppCompatActivity {
 
     //declaring variables
     private DatabaseReference databaseReference;
-
+    private Query query;
     private FloatingActionButton fab;
     private ListView listView;
     private ListViewAdapter listViewAdapter;
     private List<Member> listPerson = new ArrayList<>();
-
+    ActionBar actionBar;
     private ProgressBar progressBar;
+
+    public static String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_members);
+
+        // action bar title
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Show Individual Exercise");
 
         //initialise and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -73,7 +79,14 @@ public class ShowMembers extends AppCompatActivity {
             }
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("GroupMembers");
+        databaseReference = FirebaseDatabase.getInstance().getReference("IndividualExercise");
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        query = FirebaseDatabase.getInstance().getReference("IndividualExercise")
+                .orderByChild("userUid")
+                .equalTo(uid);
 
         initUI();
         setListViewAdapter();
@@ -82,7 +95,6 @@ public class ShowMembers extends AppCompatActivity {
         addChildEventListener();
 
         setFabClickListener();
-        setListViewItemListener();
         setListViewLongClickListener();
     }
 
@@ -100,7 +112,7 @@ public class ShowMembers extends AppCompatActivity {
 
     // show members
     private void addChildEventListener() {
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Member member = dataSnapshot.getValue(Member.class);
@@ -156,17 +168,6 @@ public class ShowMembers extends AppCompatActivity {
         });
     }
 
-    // edit member
-    private void setListViewItemListener(){
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("edit", true);
-            bundle.putParcelable("member", Parcels.wrap(listPerson.get(i)));
-            Intent intent = new Intent(this, EditPersonActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        });
-    }
 
     // delete member
     private void setListViewLongClickListener(){

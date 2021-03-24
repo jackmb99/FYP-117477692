@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/gradient"
+    android:background="@drawable/wallpaper"
+    android:backgroundTint="#80FFFFFF"
+    android:backgroundTintMode="src_over"
     tools:context=".ShowGroupExercise">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,7 +26,8 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"

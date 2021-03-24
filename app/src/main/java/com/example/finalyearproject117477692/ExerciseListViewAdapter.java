@@ -43,6 +43,7 @@ public class ExerciseListViewAdapter extends BaseAdapter {
             holder.tvEmail = convertView.findViewById(R.id.tvEmail);
             holder.tvType = convertView.findViewById(R.id.tvType);
             holder.tvDistanceCovered = convertView.findViewById(R.id.tvDistanceCovered);
+            holder.tvComment = convertView.findViewById(R.id.tvComment);
             holder.tvDate = convertView.findViewById(R.id.tvDate);
 
 
@@ -55,6 +56,7 @@ public class ExerciseListViewAdapter extends BaseAdapter {
         holder.tvEmail.setText(listExercise.get(position).getEmail());
         holder.tvType.setText(listExercise.get(position).getExerciseType());
         holder.tvDistanceCovered.setText(listExercise.get(position).getDistanceCovered() + "km");
+        holder.tvComment.setText(listExercise.get(position).getComment());
         holder.tvDate.setText(listExercise.get(position).getDate());
 
 
@@ -67,5 +69,6 @@ public class ExerciseListViewAdapter extends BaseAdapter {
         TextView tvType;
         TextView tvDistanceCovered;
         TextView tvDate;
+        TextView tvComment;
     }
 }

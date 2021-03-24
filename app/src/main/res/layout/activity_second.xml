@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="@drawable/wallpaper"
+    android:backgroundTint="#80FFFFFF"
+    android:backgroundTintMode="src_over"
     tools:context=".SecondActivity"
     tools:visibility="visible">
 
@@ -46,6 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:text="@string/convert"
+        android:background="@drawable/custom_button"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

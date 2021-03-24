@@ -8,9 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -39,6 +41,9 @@ public class Chart extends AppCompatActivity {
     BarChart barChart;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference myRef;
+    public static String uid;
+    private ProgressBar progressBar;
+    ActionBar actionBar;
 
 
     ArrayList<IBarDataSet> iBarDataSets = new ArrayList<>();
@@ -50,14 +55,19 @@ public class Chart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
-/*
-        xValue = findViewById(R.id.xTextView);
-*/
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("5K Progression");
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        progressBar = findViewById(R.id.progressBar);
+
         yValue = findViewById(R.id.yTextView);
         insertBtn = findViewById(R.id.btnInsert);
         barChart = findViewById(R.id.lineChartView);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = firebaseDatabase.getReference("ChartValues");
+        myRef = firebaseDatabase.getReference("ChartValues").child(uid);
         insertData();
         /*lineDataSet.setLineWidth(4);*/
     }
@@ -66,7 +76,8 @@ public class Chart extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                 count = (int) snapshot.getChildrenCount(); // total number of database chart entries
+                 count = (int) snapshot.getChildrenCount();// total number of database chart entries
+                 retrieveData();
             }
 
             @Override
@@ -115,6 +126,7 @@ public class Chart extends AppCompatActivity {
                     showChart(dataVals);
 
                 }else{
+                    progressBar.setVisibility(View.GONE);
                     barChart.clear();
                     barChart.invalidate();
                 }
@@ -132,13 +144,15 @@ public class Chart extends AppCompatActivity {
         BarDataSet barDataSet = new BarDataSet(dataVals, null);
         barDataSet.setValueTextSize(12);
         barDataSet.setValues(dataVals);
-        barDataSet.setLabel("DataSet 1");
+        barDataSet.setLabel("5km Progress");
         iBarDataSets.clear();
         iBarDataSets.add(barDataSet);
         barData = new BarData(iBarDataSets);
         barChart.clear();
         barChart.setData(barData);
         barChart.invalidate();
+        progressBar.setVisibility(View.GONE);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

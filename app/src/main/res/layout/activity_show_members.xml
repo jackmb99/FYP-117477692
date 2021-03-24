@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/gradient"
+    android:background="@drawable/wallpaper"
+    android:backgroundTint="#80FFFFFF"
+    android:backgroundTintMode="src_over"
     tools:context=".ShowMembers">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,6 +18,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="58dp"
+        app:backgroundTint="@android:color/white"
+        android:tint="@android:color/holo_purple"
         android:src="@android:drawable/ic_input_add"/>
 
     <ListView

@@ -14,12 +14,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 
 // Code from Michael Gleesons CRUD on firebase
@@ -31,6 +42,9 @@ public class AddToGroup extends AppCompatActivity {
     Button button;
     DatabaseReference reff;
     Member member;
+    ActionBar actionBar;
+    public static String distance;
+
 
     private boolean edit = false;
 
@@ -38,6 +52,10 @@ public class AddToGroup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_group);
+
+        // action bar title
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("New Individual Exercise");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -83,36 +101,86 @@ public class AddToGroup extends AppCompatActivity {
             Toast.makeText(AddToGroup.this, "Network is not connected", Toast.LENGTH_SHORT).show();
         }
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dataRef = database.getReference("Distance");
+
+        dataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // here you can get your data from this snapshot object
+                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    distance = dataSnapshot.child(uid).child("distance").getValue().toString();
+                    System.out.println(distance);
+                }
+
+                /*String data = dataSnapshot.getValue("distance").toString();*/
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
 
         editTextFirstName = findViewById(R.id.editTextFirstName);
-        editTextLastName = findViewById(R.id.editTextLastName);
+      //  editTextLastName = findViewById(R.id.editTextLastName);
         editTextAge = findViewById(R.id.editTextAge);
         button = findViewById(R.id.button);
         member = new Member();
-        reff = FirebaseDatabase.getInstance().getReference().child("GroupMembers");
+        reff = FirebaseDatabase.getInstance().getReference().child("IndividualExercise");
 
         // https://stackoverflow.com/questions/12947620/email-address-validation-in-android-on-edittext
         // Above is source for the below email validation pattern
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+     //   String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String email2 = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                double distanceTravelled = Double.parseDouble(distance);
                 // validation
                 String email = editTextAge.getText().toString().trim();
-                if (email.matches(emailPattern)){
+
                     if(editTextFirstName.getText().toString().isEmpty()){
                         editTextFirstName.setError("Error");
-                    }else if(editTextLastName.getText().toString().isEmpty()){
-                        editTextLastName.setError("Error");
                     }else if(editTextAge.getText().toString().isEmpty()){
                         editTextAge.setError("Error");
                     }else{
-                        int agea = Integer.parseInt(editTextLastName.getText().toString().trim());
+
+                        String dbDistance = String.valueOf(editTextAge.getText());
+                        double semiDistance = Double.parseDouble(dbDistance);
+
+                        double finalDistance = semiDistance + distanceTravelled;
+                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        int agea = Integer.parseInt(editTextAge.getText().toString().trim());
+                        String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
                         member.setName(editTextFirstName.getText().toString().trim());
-                        member.setAge(agea);
-                        member.setContact(editTextAge.getText().toString().trim());
+                        member.setContact(agea);
+                        member.setUserUid(uid);
+                        member.setDateStamp(timeStamp);
+
+                        HashMap map = new HashMap();
+                        map.put("name", email2);
+                        map.put("distance", finalDistance);
+                        map.put("userUid", uid);
+
+                        FirebaseDatabase.getInstance().getReference("Distance").child(uid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                               // Toast.makeText(AddToGroup.this, "Inserted", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AddToGroup.this, "Fail", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
 
                         if(edit){
                             reff.child(member.getKey()).setValue(member);
@@ -126,9 +194,7 @@ public class AddToGroup extends AppCompatActivity {
                         finish();
 
                     }
-                }else{
-                    editTextAge.setError("Invalid email");
-                }
+
 
             }
         });

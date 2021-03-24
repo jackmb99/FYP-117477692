@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -26,19 +27,22 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     EditText etEmail, etPassword;
     ProgressBar progressBar;
 
+    ImageView imageView;
     ActionBar actionBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+
         actionBar = getSupportActionBar();
         actionBar.setTitle("Log In");
 
         // initialising variables
         mAuth = FirebaseAuth.getInstance();
+
+        imageView = findViewById(R.id.imageView);
 
         findViewById(R.id.tvSignUp).setOnClickListener(this);
         findViewById(R.id.btnLogin).setOnClickListener(this);
@@ -89,10 +93,16 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         progressBar.setVisibility(View.VISIBLE);
         if (email.equals("admin@admin.com") && password.equals("admin1")) {
+            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(LogInActivity.this, Admin.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-        } else {
+        } else if (email.equals("coach@coach.com") && password.equals("coach1")){
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(LogInActivity.this, Planner.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }else {
         //log in
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

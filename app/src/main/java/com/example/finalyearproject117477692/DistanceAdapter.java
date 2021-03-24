@@ -56,7 +56,7 @@ public class DistanceAdapter extends RecyclerView.Adapter<DistanceAdapter.Distan
         DistanceData currentItem = list.get(position);
         holder.name.setText(currentItem.getName());
         holder.distance.setText(String.valueOf(currentItem.getDistance() + "km")); // making km appear in text view
-        holder.rank.setText(String.valueOf(i));
+        holder.rank.setText(String.valueOf(list.size() - position));
         i++; // increasing rank, rank starts at 1 as defined above
     }
         // avoid null values on display

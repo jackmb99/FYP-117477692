@@ -9,6 +9,11 @@
         <item>Miles</item>
     </string-array>
 
+    <!--to toggle the open close button
+        of the navigation drawer-->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
     <!--Covid strings-->
     <string name="ireland_s_statistics">Ireland\'s Statistics</string>
     <string name="cases">Cases</string>

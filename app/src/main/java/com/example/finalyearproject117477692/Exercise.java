@@ -7,6 +7,9 @@ public class Exercise {
     private String distanceCovered;
     private String date;
     private String key;
+    private String comment;
+
+
 
     //constructor
     public Exercise() {
@@ -42,6 +45,13 @@ public class Exercise {
 
     public void setDistanceCovered(String distanceCovered) {
         this.distanceCovered = distanceCovered;
+    }
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getKey() {

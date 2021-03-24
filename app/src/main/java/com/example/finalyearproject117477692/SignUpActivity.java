@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,10 +35,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth mAuth;
     DatabaseReference reference;
     FirebaseUser currentUser;
+    ActionBar actionBar;
+    DatabaseReference reff;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        // action bar title
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Sign Up");
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -47,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.tvLogIn).setOnClickListener(this);
 
         reference = FirebaseDatabase.getInstance().getReference().child("Distance");
+        reff = FirebaseDatabase.getInstance().getReference().child("Users");
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -90,6 +100,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     HashMap map = new HashMap();
                     map.put("name", email); // idea from https://www.youtube.com/watch?v=j1_tEaYchyk
                     map.put("distance", 0);
+                    map.put("userUid", uid);
                     /*reference.child(currentUser.getUid()).setValue(map);*/
                     FirebaseDatabase.getInstance().getReference("Distance").child(uid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -104,6 +115,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                         }
                     });
+
+                    // later used in admin spinner
+                    reff.push().setValue(email);
+
                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

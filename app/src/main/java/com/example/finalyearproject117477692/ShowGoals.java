@@ -44,6 +44,8 @@ public class ShowGoals extends AppCompatActivity {
     private List<Goal> listGoal = new ArrayList<>();
     ActionBar actionBar;
 
+    public static String uid;
+
     private ProgressBar progressBar;
 
     @Override
@@ -82,7 +84,10 @@ public class ShowGoals extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("IndividualGoals");
         // reff = FirebaseDatabase.getInstance().getReference("CompletedGoals");
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            // query for unique user goals
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
         query = FirebaseDatabase.getInstance().getReference("IndividualGoals")
                 .orderByChild("userUid")
                 .equalTo(uid);

@@ -42,8 +42,9 @@ public class ListViewAdapter extends BaseAdapter {
             // ViewHolder class which caches views associated with the default Preference layouts.
             holder = new ViewHolder();
             holder.textViewFirstName = convertView.findViewById(R.id.textViewFirstName);
-            holder.textViewLastName = convertView.findViewById(R.id.textViewLastName);
+         //   holder.textViewLastName = convertView.findViewById(R.id.textViewLastName);
             holder.textViewAge = convertView.findViewById(R.id.textViewAge);
+            holder.tvDate = convertView.findViewById(R.id.tvDate);
 
             convertView.setTag(holder);
         }else{
@@ -51,8 +52,10 @@ public class ListViewAdapter extends BaseAdapter {
         }
 
         holder.textViewFirstName.setText(listPerson.get(position).getName());
-        holder.textViewLastName.setText(listPerson.get(position).getContact());
-        holder.textViewAge.setText(listPerson.get(position).getAge() + "");
+        holder.textViewAge.setText(listPerson.get(position).getContact() + "km");
+        holder.tvDate.setText(listPerson.get(position).getDateStamp());
+
+
 
         return convertView;
     }
@@ -60,7 +63,7 @@ public class ListViewAdapter extends BaseAdapter {
 // defining the items in the holder
     class ViewHolder{
         TextView textViewFirstName;
-        TextView textViewLastName;
         TextView textViewAge;
+        TextView tvDate;
     }
 }

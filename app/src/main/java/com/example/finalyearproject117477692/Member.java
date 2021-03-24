@@ -5,9 +5,18 @@ import org.parceler.Parcel;
 @Parcel
 public class Member {
     private String Name;
-    private Integer Age;
-    private String Contact;
+    private int Contact;
     private String key;
+    private String userUid;
+    private String dateStamp;
+
+    public String getDateStamp() {
+        return dateStamp;
+    }
+
+    public void setDateStamp(String dateStamp) {
+        this.dateStamp = dateStamp;
+    }
 
 
 
@@ -23,20 +32,20 @@ public class Member {
     public void setName(String name) {
         Name = name;
     }
-
-    public Integer getAge() {
-        return Age;
+    public String getUserUid() {
+        return userUid;
     }
 
-    public void setAge(Integer age) {
-        Age = age;
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 
-    public String getContact() {
+
+    public int getContact() {
         return Contact;
     }
 
-    public void setContact(String contact) {
+    public void setContact(int contact) {
         Contact = contact;
     }
     public String getKey() {
@@ -49,7 +58,7 @@ public class Member {
 
     //format that I want the members of database to print out as
     public String toString(){
-        return this.Name + ", " + Age + " years of age - " + Contact;
+        return this.Name + ", " + " years of age - " + Contact;
     }
 
 

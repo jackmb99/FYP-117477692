@@ -10,7 +10,7 @@
         android:id="@+id/btnGroup"
         android:layout_width="161dp"
         android:layout_height="55dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="164dp"
         android:background="@drawable/custom_button"
         android:text="@string/join_group"
         android:textColor="#FFFFFF"
@@ -30,4 +30,17 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGroup" />
+
+    <Button
+        android:id="@+id/btnPlanner"
+        android:layout_width="161dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/custom_button"
+        android:text="Group Plan"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoto" />
 </androidx.constraintlayout.widget.ConstraintLayout>

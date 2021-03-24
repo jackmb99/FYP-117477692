@@ -42,6 +42,7 @@ public class Group extends AppCompatActivity {
 
         Button btnGroup = findViewById(R.id.btnGroup);
         Button btnGoto = findViewById(R.id.btnGoto);
+        Button btnPlanner = findViewById(R.id.btnPlanner);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -50,15 +51,19 @@ public class Group extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // here you can get your data from this snapshot object
-                uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                System.out.println(uid);
-                /*String data = dataSnapshot.getValue("distance").toString();*/
-                if(dataSnapshot.child(uid).child("userUid").getValue() == null) {
-                    user = "invalidnametesttttt";
-                }else{
-                    user = dataSnapshot.child(uid).child("userUid").getValue().toString();
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    System.out.println(uid);
+
+
+                    /*String data = dataSnapshot.getValue("distance").toString();*/
+                    if (dataSnapshot.child(uid).child("userUid").getValue() == null) {
+                        user = "invalidnametesttttt";
+                    } else {
+                        user = dataSnapshot.child(uid).child("userUid").getValue().toString();
+                    }
+                    System.out.println(user);
                 }
-                System.out.println(user);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -108,6 +113,19 @@ public class Group extends AppCompatActivity {
                 if (user.equals(uid)) {
                     System.out.println(user + " and " + uid);
                     Intent intent = new Intent(Group.this, ShowGroupExercise.class);
+                    startActivity(intent);
+                } else{
+                    Toast.makeText(Group.this, "User not a member of group", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        btnPlanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user.equals(uid)) {
+                    System.out.println(user + " and " + uid);
+                    Intent intent = new Intent(Group.this, Planner.class);
                     startActivity(intent);
                 } else{
                     Toast.makeText(Group.this, "User not a member of group", Toast.LENGTH_SHORT).show();

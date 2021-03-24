@@ -16,8 +16,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
@@ -27,6 +29,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
+    // GoogleMap googleMap;
 
 
     @Override
@@ -40,42 +43,75 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    //permissions
     private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
-
+        // getting current location
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        System.out.println(task + "hello");
+
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-
+                    System.out.println("hello");
                     currentLocation = location;
                     Toast.makeText(getApplicationContext(), currentLocation.getLatitude()
                             + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                    SupportMapFragment supportMapFragment = (SupportMapFragment)
+                    SupportMapFragment mapFragment = (SupportMapFragment)
                             getSupportFragmentManager().findFragmentById(R.id.map);
-                    supportMapFragment.getMapAsync(MapsActivity.this);
+                    mapFragment.getMapAsync(MapsActivity.this);
                 }
             }
         });
+        task.addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                System.out.println("completeddd");
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map);
+                mapFragment.getMapAsync(MapsActivity.this);
+            }
+        });
+
+
     }
 
-
+// setting marker
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
-                .title("I am here");
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        // googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
-        googleMap.addMarker(markerOptions);
+        if (currentLocation != null){
+            LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                    .title("I am here");
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            // googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+            googleMap.addMarker(markerOptions);
+            System.out.println("option 1");
+        }else {
+            LatLng latLng = new LatLng(51.95272942685293, -8.42479705810547);
+            Toast.makeText(getApplicationContext(), latLng.longitude + ", " + latLng.latitude, Toast.LENGTH_SHORT).show();
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("Current location"));
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+            googleMap.addMarker(markerOptions);
 
+            // users see whats within their 5km
+            googleMap.addCircle(new CircleOptions()
+                    .center(latLng)
+                    .radius(5000)
+                    .strokeWidth(0f)
+                    .fillColor(0x550000FF));
+
+            System.out.println("option 2");
+        }
     }
 
     @Override

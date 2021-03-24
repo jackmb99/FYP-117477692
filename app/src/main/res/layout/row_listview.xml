@@ -7,14 +7,16 @@
 
     <TextView
         android:id="@+id/textViewFirstName"
-        style="@style/textViewStyle"/>
+        style="@style/textViewStyle"
+        android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/textViewLastName"
-        style="@style/textViewStyle"/>
 
     <TextView
         android:id="@+id/textViewAge"
+        style="@style/textViewStyle"/>
+
+    <TextView
+        android:id="@+id/tvDate"
         style="@style/textViewStyle"/>
 
 </LinearLayout>

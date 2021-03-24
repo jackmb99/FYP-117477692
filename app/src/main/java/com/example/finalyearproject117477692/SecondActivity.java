@@ -1,5 +1,7 @@
 package com.example.finalyearproject117477692;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,10 +25,16 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SecondActivity extends AppCompatActivity {
 
+    ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        // action bar title
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Distance Converter");
 
         /*Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
@@ -79,14 +88,36 @@ public class SecondActivity extends AppCompatActivity {
                         case 1:
                             convertedValue = convertToKm(distanceValue); //brings you to convert to kilometres function
                             finalValue = Math.round(convertedValue * 100.0)/100.0;
-                            tvResult.setText(etEnteredDistanceType + " Miles is\n" + String.valueOf(finalValue) + " Kilometres");
-                            tvResult.setVisibility(View.VISIBLE);
+                            AlertDialog alertDialog = new AlertDialog.Builder(SecondActivity.this).create();
+                            alertDialog.setTitle("Conversion");
+                            alertDialog.setMessage(etEnteredDistanceType + " Miles is\n" + String.valueOf(finalValue) + " Kilometres");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                            etEnterAmount.setText("");
+                           // tvResult.setText(etEnteredDistanceType + " Miles is\n" + String.valueOf(finalValue) + " Kilometres");
+                           // tvResult.setVisibility(View.VISIBLE);
                             break;
                         case 2:
                             convertedValue = convertToMiles(distanceValue); //brings you to convert to miles function
                             finalValue = Math.round(convertedValue * 100.0)/100.0;
-                            tvResult.setText(etEnteredDistanceType + " Kilometres is\n" + String.valueOf(finalValue) + " Miles");
-                            tvResult.setVisibility(View.VISIBLE);
+                            AlertDialog alertDialog2 = new AlertDialog.Builder(SecondActivity.this).create();
+                            alertDialog2.setTitle("Conversion");
+                            alertDialog2.setMessage(etEnteredDistanceType + " Miles is\n" + String.valueOf(finalValue) + " Kilometres");
+                            alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog2.show();
+                            etEnterAmount.setText("");
+                          //  tvResult.setText(etEnteredDistanceType + " Kilometres is\n" + String.valueOf(finalValue) + " Miles");
+                            // tvResult.setVisibility(View.VISIBLE);
                             break;
                     }
 
