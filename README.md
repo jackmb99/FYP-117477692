@@ -31,6 +31,17 @@ https://www.youtube.com/watch?v=FmZLWe_gaSY
 Iteration 4
 https://www.youtube.com/watch?v=nlPtfncjOWA&t
 https://stackoverflow.com/questions/30969455/android-changing-floating-action-button-color#:~:text=The%20background%20color%20of%20this,so%20via%20setBackgroundTintList(ColorStateList).&text=can%20just%20write-,mFab.,your%20color%20in%20int)%3B
+Iteration 5
+Location -> https://www.youtube.com/watch?v=p0PoKEPI65o
+Querying -> https://www.youtube.com/watch?v=WeoryL3XyA4
+Transparency of background image -> https://stackoverflow.com/questions/22406961/how-to-set-transparency-of-a-background-image-android-xml-file#:~:text=set%20android%3Aalpha%3D%220.4,child%20elements%20of%20the%20layout.
+Iteration 6
+Planner -> https://www.youtube.com/watch?v=LX61IJI6wGw
+Alert Dialog -> https://stackoverflow.com/questions/26097513/android-simple-alert-dialog
+Animations -> https://www.youtube.com/watch?v=otMSB-dFuY8
+Stopwatch -> https://www.geeksforgeeks.org/how-to-create-a-stopwatch-app-using-android-studio/
+Spinner Audit -> https://www.youtube.com/watch?v=zoQsC1o3P0s&t
+
 
 Stack Overflow:
 https://stackoverflow.com/questions/12947620/email-address-validation-in-android-on-edittext
