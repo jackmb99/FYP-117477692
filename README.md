@@ -1,5 +1,7 @@
 # FYP-117477692
 --------------
+I declare that this is my own work, except where duly acknowledged
+--------------
 Intoduction
 For my Final Year project I am developing a group based fitness app for firends and sports teams. I believe this
 is especially relevant at the moment as a result of Covid-19. The aim is to keep people exercising, motivated and prevent sedentary lifestyles.
@@ -42,6 +44,21 @@ Animations -> https://www.youtube.com/watch?v=otMSB-dFuY8
 Stopwatch -> https://www.geeksforgeeks.org/how-to-create-a-stopwatch-app-using-android-studio/
 Spinner Audit -> https://www.youtube.com/watch?v=zoQsC1o3P0s&t
 
+Libraries used
+graph
+implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
+implementation 'com.leo.simplearcloader:simplearcloader:1.0.+'
+implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+
+animations
+implementation 'com.daimajia.easing:library:2.0@aar'
+implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+Covid
+implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
 Stack Overflow:
 https://stackoverflow.com/questions/12947620/email-address-validation-in-android-on-edittext
