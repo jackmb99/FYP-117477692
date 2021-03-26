@@ -116,15 +116,12 @@ public class Chart extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-
                 if(snapshot.hasChildren()){
                     for(DataSnapshot myDataSnapshot : snapshot.getChildren()){
                         DataPoint dataPoint = myDataSnapshot.getValue(DataPoint.class);
                         dataVals.add(new BarEntry(dataPoint.getxValue(), dataPoint.getyValue()));
                     }
-
                     showChart(dataVals);
-
                 }else{
                     progressBar.setVisibility(View.GONE);
                     barChart.clear();

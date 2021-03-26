@@ -19,7 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Locale;
 
-// code from https://www.geeksforgeeks.org/how-to-create-a-stopwatch-app-using-android-studio/
+// code for timer from https://www.geeksforgeeks.org/how-to-create-a-stopwatch-app-using-android-studio/
+// code for animations from https://www.youtube.com/watch?v=otMSB-dFuY8
 public class Timer extends AppCompatActivity {
 
     private int seconds = 0;
@@ -166,26 +167,19 @@ public class Timer extends AppCompatActivity {
                 int hours = seconds / 3600;
                 int minutes = (seconds % 3600) / 60;
                 int secs = seconds % 60;
-
-                // Format the seconds into hours, minutes,
-                // and seconds.
+                // Format the seconds into hours, minutes, and seconds
                 String time
                         = String
                         .format(Locale.getDefault(),
                                 "%d:%02d:%02d", hours,
                                 minutes, secs);
-
                 // Set the text view text.
                 timeView.setText(time);
-
-                // If running is true, increment the
-                // seconds variable.
+                // If running is true, increment the seconds variable.
                 if (running) {
                     seconds++;
                 }
-
-                // Post the code again
-                // with a delay of 1 second.
+                // Post the code again with a delay of 1 second i.e. increase in seconds
                 handler.postDelayed(this, 1000);
             }
         });

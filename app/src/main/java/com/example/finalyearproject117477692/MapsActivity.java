@@ -84,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (currentLocation != null){
+            // runs if emulator works correctly -> code runs perfectly on actual phone
             LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions().position(latLng)
                     .title("I am here");
@@ -93,6 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             googleMap.addMarker(markerOptions);
             System.out.println("option 1");
         }else {
+            // runs in case of error in emulator -> code runs perfectly on actual phone
             LatLng latLng = new LatLng(51.95272942685293, -8.42479705810547);
             Toast.makeText(getApplicationContext(), latLng.longitude + ", " + latLng.latitude, Toast.LENGTH_SHORT).show();
             googleMap.addMarker(new MarkerOptions()

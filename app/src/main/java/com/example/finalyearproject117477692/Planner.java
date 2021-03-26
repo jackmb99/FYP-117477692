@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Planner extends AppCompatActivity {
 
+    // declare variables
     private EditText etMonday, etTuesday, etWednesday, etThursday, etFriday, etSaturday, etSunday;
     private Button btnPlanner;
     Plan plan;
@@ -38,9 +39,10 @@ public class Planner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planner);
 
+        // set up action bar
         actionBar = getSupportActionBar();
         actionBar.setTitle("Group Planner");
-
+        // initialise variables
         btnPlanner = findViewById(R.id.btnPlanner);
         etMonday = findViewById(R.id.etMonday);
         etTuesday = findViewById(R.id.etTuesday);
@@ -49,7 +51,8 @@ public class Planner extends AppCompatActivity {
         etFriday = findViewById(R.id.etFriday);
         etSaturday = findViewById(R.id.etSaturday);
         etSunday = findViewById(R.id.etSunday);
-
+        // if user is logged in as general user, text fields are not able to be edited
+        // button also removed
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             btnPlanner.setVisibility(View.GONE);
             etMonday.setEnabled(false);
@@ -59,7 +62,7 @@ public class Planner extends AppCompatActivity {
             etFriday.setEnabled(false);
             etSaturday.setEnabled(false);
             etSunday.setEnabled(false);
-
+            // set text to be bold
             etMonday.setTypeface(null, Typeface.BOLD);
             etTuesday.setTypeface(null, Typeface.BOLD);
             etWednesday.setTypeface(null, Typeface.BOLD);
@@ -67,7 +70,7 @@ public class Planner extends AppCompatActivity {
             etFriday.setTypeface(null, Typeface.BOLD);
             etSaturday.setTypeface(null, Typeface.BOLD);
             etSunday.setTypeface(null, Typeface.BOLD);
-
+            // set text to be black
             etMonday.setTextColor(Color.parseColor("#000000"));
             etTuesday.setTextColor(Color.parseColor("#000000"));
             etWednesday.setTextColor(Color.parseColor("#000000"));
@@ -89,7 +92,7 @@ public class Planner extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
+                // show planner details
                 String monday = snapshot.child("monday").getValue().toString();
                 String tuesday = snapshot.child("tuesday").getValue().toString();
                 String wednesday = snapshot.child("wednesday").getValue().toString();
@@ -118,6 +121,7 @@ public class Planner extends AppCompatActivity {
 
         // initialize class
         plan = new Plan();
+        // update planner
         btnPlanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,10 +148,8 @@ public class Planner extends AppCompatActivity {
                     plan.setSaturday(etSaturday.getText().toString().trim());
                     plan.setSunday(etSunday.getText().toString().trim());
 
-                    /*String key = reff.push().getKey();
-                    plan.setKey(key);*/
                     reff.setValue(plan);
-                    Toast.makeText(Planner.this, "Data inserted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Planner.this, "Planner updated successfully", Toast.LENGTH_SHORT).show();
 
                 }
             }

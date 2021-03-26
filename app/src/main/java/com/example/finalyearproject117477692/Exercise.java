@@ -2,6 +2,7 @@ package com.example.finalyearproject117477692;
 
 public class Exercise {
 
+    // used for group and exercises
     private String email;
     private String exerciseType;
     private String distanceCovered;

@@ -153,7 +153,7 @@ public class AddToGroup extends AppCompatActivity {
 
                         String dbDistance = String.valueOf(editTextAge.getText());
                         double semiDistance = Double.parseDouble(dbDistance);
-
+                        // adding to individual workout
                         double finalDistance = semiDistance + distanceTravelled;
                         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         int agea = Integer.parseInt(editTextAge.getText().toString().trim());
@@ -163,6 +163,7 @@ public class AddToGroup extends AppCompatActivity {
                         member.setUserUid(uid);
                         member.setDateStamp(timeStamp);
 
+                        //adding to leader board
                         HashMap map = new HashMap();
                         map.put("name", email2);
                         map.put("distance", finalDistance);

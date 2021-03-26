@@ -27,6 +27,7 @@ import java.util.HashMap;
 
 public class Group extends AppCompatActivity {
 
+    // declare variables
     public static String user;
     public static String uid;
 
@@ -71,7 +72,7 @@ public class Group extends AppCompatActivity {
             }
 
         });
-
+        // join group if user not already in group
         btnGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +108,7 @@ public class Group extends AppCompatActivity {
             }
         });
 
+        // go to group if user is a member
         btnGoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +122,7 @@ public class Group extends AppCompatActivity {
 
             }
         });
+        // go to planner if user is a group member
         btnPlanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +137,16 @@ public class Group extends AppCompatActivity {
             }
         });
     }
+    // overide back button functionality
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(Group.this, MainActivity.class));
+        finish();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
 

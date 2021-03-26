@@ -239,6 +239,16 @@ public class ShowGoals extends AppCompatActivity {
             startActivity(new Intent(this, EditGoalActivity.class));
         });
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(ShowGoals.this, MainActivity.class));
+        finish();
+
+    }
+
 }
 /* databaseReference = FirebaseDatabase.getInstance().getReference("CompletedGoals");
                         String key = databaseReference.push().getKey();

@@ -30,6 +30,7 @@ import java.util.HashMap;
 
 public class GroupExercise extends AppCompatActivity {
 
+    // declare variables
     public static String distance;
     public static String distanceGroup;
     private boolean edit = false;
@@ -41,9 +42,11 @@ public class GroupExercise extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_exercise);
 
+        // set up action bar
         actionBar = getSupportActionBar();
         actionBar.setTitle("Log Group Activity");
 
+        // initialise variables
         Button btnExercise = findViewById(R.id.btnExercise);
         EditText etExercise = findViewById(R.id.etExercise);
         EditText etDistanceExercised = findViewById(R.id.etDistanceExercised);
@@ -90,7 +93,7 @@ public class GroupExercise extends AppCompatActivity {
                 }
 
         });
-
+        // Update distance score with exercise
         btnExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +141,7 @@ public class GroupExercise extends AppCompatActivity {
 
                         }
                     });
+                    // Update group score with exercise
                     HashMap map2 = new HashMap();
                     map2.put("name", email);
                     map2.put("userUid", uid);
@@ -173,6 +177,7 @@ public class GroupExercise extends AppCompatActivity {
                     exercise.setEmail(email);
                     exercise.setDate(timeStamp);
 
+                    // add group exercise
                     if(edit){
                         dataRef2.child(exercise.getKey()).setValue(exercise);
                     }else{

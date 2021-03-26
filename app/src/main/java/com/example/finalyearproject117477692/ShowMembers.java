@@ -110,7 +110,7 @@ public class ShowMembers extends AppCompatActivity {
         listView.setAdapter(listViewAdapter);
     }
 
-    // show members
+    // show individual exercise
     private void addChildEventListener() {
         query.addChildEventListener(new ChildEventListener() {
             @Override
@@ -169,7 +169,7 @@ public class ShowMembers extends AppCompatActivity {
     }
 
 
-    // delete member
+    // delete exercise
     private void setListViewLongClickListener(){
         listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
             Member member = listPerson.get(i);
@@ -195,6 +195,16 @@ public class ShowMembers extends AppCompatActivity {
             startActivity(new Intent(this, AddToGroup.class));
         });
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(ShowMembers.this, MainActivity.class));
+        finish();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
 

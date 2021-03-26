@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+        // check if user in group
         DatabaseReference dataRef = database.getReference("Group");
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override

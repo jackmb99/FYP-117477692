@@ -1,5 +1,6 @@
 package com.example.finalyearproject117477692;
 
+// used for planner
 public class Plan {
     private String Monday;
     private String Tuesday;

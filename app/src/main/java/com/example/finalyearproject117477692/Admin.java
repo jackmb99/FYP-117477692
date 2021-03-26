@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+// https://www.youtube.com/watch?v=zoQsC1o3P0s&t - spinner code adapted from here
 public class Admin extends AppCompatActivity {
+    // Declare variables
     private Query query;
     private Query query2;
     public static long distanceVar;
@@ -59,7 +61,7 @@ public class Admin extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setTitle("Admin");
 
-
+        // initialise variables
         spinner = findViewById(R.id.mySpinner);
         Button btnUpdate = findViewById(R.id.btnUpdate);
        // EditText etEmailAddress = findViewById(R.id.etEmailAddress);
@@ -67,12 +69,13 @@ public class Admin extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dataRef = database.getReference("Group");
         databaseReference = database.getReference("Users");
+        // populating spinner with firebase data
         spinnerDataList = new ArrayList<>();
         adapter = new ArrayAdapter<String>(Admin.this,R.layout.support_simple_spinner_dropdown_item,spinnerDataList);
         spinner.setAdapter(adapter);
         retrieveData();
 
-
+        // update user score
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,17 +84,19 @@ public class Admin extends AppCompatActivity {
                 } else if (etSubtracted.getText().toString().isEmpty()) {
                     etSubtracted.setError("Error");
                 } else {
-                    alreadyExecuted = false;
-                    alreadyExecuted2 = false;
+                    alreadyExecuted = false; // making loop run only once
+                    alreadyExecuted2 = false; // making loop run only once
                     String name = spinner.getSelectedItem().toString();
                     System.out.println(name);
                     String subtractedDistance = String.valueOf(etSubtracted.getText());
                     double subtractedDistanceFinal = Double.parseDouble(subtractedDistance);
                     distance = new DistanceData();
 
+                    // query for group
                     query = FirebaseDatabase.getInstance().getReference("Group")
                             .orderByChild("name")
                             .equalTo(name);
+                    // query for distance
                     query2 = FirebaseDatabase.getInstance().getReference("Distance")
                             .orderByChild("name")
                             .equalTo(name);
@@ -131,7 +136,7 @@ public class Admin extends AppCompatActivity {
                                 insert();
                             }
                         }
-
+                        // subtracting from group
                         private void insert() {
                             double finalDistance = distanceVar - subtractedDistanceFinal;
 
@@ -167,6 +172,7 @@ public class Admin extends AppCompatActivity {
                         }
 
                     });
+
                     query2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -183,7 +189,7 @@ public class Admin extends AppCompatActivity {
                                 insert2();
                             }
                         }
-
+                        // subtracting from global distance score
                         private void insert2() {
                             System.out.println("insert2on");
                             double finalDistance = solodistanceVar - subtractedDistanceFinal;
@@ -223,6 +229,7 @@ public class Admin extends AppCompatActivity {
         });
     }
 
+    // populating spinner
     public void retrieveData(){
         listener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

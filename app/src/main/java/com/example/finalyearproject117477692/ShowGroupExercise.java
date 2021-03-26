@@ -44,7 +44,7 @@ public class ShowGroupExercise extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_group_exercise);
-
+        // setting up action bar
         actionBar = getSupportActionBar();
         actionBar.setTitle("View Group Exercises");
 
@@ -136,6 +136,16 @@ public class ShowGroupExercise extends AppCompatActivity {
         fab.setOnClickListener(e -> {
             startActivity(new Intent(this, GroupExercise.class));
         });
+    }
+
+    // override back button
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(ShowGroupExercise.this, Group.class));
+        finish();
+
     }
 
 

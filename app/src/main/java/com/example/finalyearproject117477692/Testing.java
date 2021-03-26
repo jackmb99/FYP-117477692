@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 // used for testing
+// not part of app anymore
 public class Testing extends AppCompatActivity {
 
     EditText etDistanceTravelled;

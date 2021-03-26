@@ -96,6 +96,7 @@ public class EditGoalActivity extends AppCompatActivity {
         goal = new Goal();
         reff = FirebaseDatabase.getInstance().getReference().child("IndividualGoals");
 
+        // create new goal
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
